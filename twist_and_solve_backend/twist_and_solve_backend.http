@@ -1,0 +1,6 @@
+@twist_and_solve_backend_HostAddress = http://localhost:5167
+
+GET {{twist_and_solve_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

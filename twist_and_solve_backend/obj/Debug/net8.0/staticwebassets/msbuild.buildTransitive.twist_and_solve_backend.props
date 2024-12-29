@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\twist_and_solve_backend.props" />
+</Project>

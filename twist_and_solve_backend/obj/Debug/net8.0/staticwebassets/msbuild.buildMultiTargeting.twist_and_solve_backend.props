@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\twist_and_solve_backend.props" />
+</Project>
