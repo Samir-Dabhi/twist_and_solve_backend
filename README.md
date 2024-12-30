@@ -35,7 +35,7 @@ Refer to individual table creation scripts for details.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/twist-and-solve-api.git
+   git clone hhttps://github.com/Samir-Dabhi/twist_and_solve_backend
    ```
 
 2. Configure the database connection string in `appsettings.json`:
@@ -115,8 +115,3 @@ Refer to individual table creation scripts for details.
 - **GET** `/Setting/{userId}` - Retrieve settings for a specific user.
 - **POST** `/Setting` - Add user settings.
 - **PUT** `/Setting/{userId}` - Update user settings.
-
----
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
