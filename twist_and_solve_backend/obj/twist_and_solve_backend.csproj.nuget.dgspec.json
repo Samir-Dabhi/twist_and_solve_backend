@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dabhi\\source\\repos\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj": {}
+    "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dabhi\\source\\repos\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj": {
+    "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dabhi\\source\\repos\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj",
+        "projectUniqueName": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj",
         "projectName": "twist_and_solve_backend",
-        "projectPath": "C:\\Users\\dabhi\\source\\repos\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj",
+        "projectPath": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\twist_and_solve_backend.csproj",
         "packagesPath": "C:\\Users\\dabhi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dabhi\\source\\repos\\twist_and_solve_backend\\twist_and_solve_backend\\obj\\",
+        "outputPath": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dabhi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,6 +49,10 @@
             "FluentValidation": {
               "target": "Package",
               "version": "[11.11.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.0, )"
             },
             "Microsoft.AspNet.Cors": {
               "target": "Package",

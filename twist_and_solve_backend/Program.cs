@@ -1,4 +1,6 @@
+using FluentValidation.AspNetCore;
 using twist_and_solve_backend.Data;
+using twist_and_solve_backend.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+builder.Services.AddControllers()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AchievementValidator>());
 // Add services to the container.
 
 builder.Services.AddControllers();
