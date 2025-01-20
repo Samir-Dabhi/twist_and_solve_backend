@@ -1,4 +1,3 @@
-using FluentValidation.AspNetCore;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Validators;
 
@@ -16,8 +15,8 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddControllers()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AchievementValidator>());
+//builder.Services.AddControllers()
+//    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AchievementValidator>());
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -51,4 +50,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://192.168.1.7:5167");
+app.Run();
