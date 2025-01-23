@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43ff3b97ba61fa878042aca875675b843dfbeed3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d87aee31002e1af30fc2b7c89b86132738c57304")]
 [assembly: System.Reflection.AssemblyProductAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
