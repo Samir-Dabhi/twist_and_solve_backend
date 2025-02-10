@@ -349,3 +349,7 @@ D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Debug\net8.0\twist_an.4133E200.Up2Date
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Debug\net8.0\twist_and_solve_backend.genruntimeconfig.cache
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Debug\net8.0\ref\twist_and_solve_backend.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\bin\Debug\net8.0\CloudinaryDotNet.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\bin\Debug\net8.0\web.config
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll

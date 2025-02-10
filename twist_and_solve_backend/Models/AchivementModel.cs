@@ -10,4 +10,14 @@
 
         public string IconUrl { get; set; } // Maps to icon_url
     }
+    public class AchievementUploadModel
+    {
+        public int AchievementId { get; set; } // Maps to achievement_id
+
+        public string Title { get; set; } // Maps to title
+
+        public string Description { get; set; } // Maps to description
+
+        public IFormFile IconUrl { get; set; } // Maps to icon_url
+    }
 }

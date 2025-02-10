@@ -37,7 +37,7 @@ namespace twist_and_solve_backend.Controllers
 
         // POST: api/UserAchievement
         [HttpPost]
-        public IActionResult AddUserAchievement([FromBody] UserAchievementModel userAchievement)
+        public IActionResult AddUserAchievement([FromBody] UserAchievementUploadModel userAchievement)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace twist_and_solve_backend.Controllers
 
         // PUT: api/UserAchievement/{userAchievementId}
         [HttpPut("{userAchievementId}")]
-        public IActionResult UpdateUserAchievement(int userAchievementId, [FromBody] UserAchievementModel userAchievement)
+        public IActionResult UpdateUserAchievement(int userAchievementId, [FromBody] UserAchievementUploadModel userAchievement)
         {
             if (userAchievementId != userAchievement.UserAchievementId)
             {

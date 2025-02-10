@@ -44,7 +44,10 @@ namespace twist_and_solve_backend.Data
                                 AchievementId = reader.GetInt32(reader.GetOrdinal("achievement_id")),
                                 DateEarned = reader.IsDBNull(reader.GetOrdinal("date_earned"))
                                     ? (DateTime?)null
-                                    : reader.GetDateTime(reader.GetOrdinal("date_earned"))
+                                    : reader.GetDateTime(reader.GetOrdinal("date_earned")),
+                                Title = reader.GetString(reader.GetOrdinal("title")),
+                                Description = reader.GetString(reader.GetOrdinal("description")),
+                                IconURL = reader.GetString(reader.GetOrdinal("icon_url")),
                             };
                             userAchievements.Add(userAchievement);
                         }
@@ -83,6 +86,7 @@ namespace twist_and_solve_backend.Data
                                     : reader.GetDateTime(reader.GetOrdinal("date_earned")),
                                 Title = reader.GetString(reader.GetOrdinal("title")),
                                 Description = reader.GetString(reader.GetOrdinal("description")),
+                                IconURL = reader.GetString(reader.GetOrdinal("icon_url")),
                             };
                             userAchievements.Add(userAchievement);
                         }
@@ -93,7 +97,7 @@ namespace twist_and_solve_backend.Data
         }
 
         // Insert a user achievement
-        public bool InsertUserAchievement(UserAchievementModel userAchievement)
+        public bool InsertUserAchievement(UserAchievementUploadModel userAchievement)
         {
             string connectionString = GetConnectionString();
 
@@ -115,7 +119,7 @@ namespace twist_and_solve_backend.Data
         }
 
         // Update a user achievement
-        public bool UpdateUserAchievement(UserAchievementModel userAchievement)
+        public bool UpdateUserAchievement(UserAchievementUploadModel userAchievement)
         {
             string connectionString = GetConnectionString();
 

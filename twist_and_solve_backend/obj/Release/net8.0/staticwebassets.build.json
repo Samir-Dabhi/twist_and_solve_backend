@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "x6A5zXRGeBuJ0jPpfz4QZ8tIOTJG1IXswZgcfDiTx4c=",
+  "Source": "twist_and_solve_backend",
+  "BasePath": "_content/twist_and_solve_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

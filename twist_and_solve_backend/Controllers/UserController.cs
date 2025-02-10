@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
+using twist_and_solve_backend.Services;
 
 namespace twist_and_solve_backend.Controllers
 {
@@ -10,10 +12,12 @@ namespace twist_and_solve_backend.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserRepository _userRepository;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public UserController(UserRepository userRepository)
+        public UserController(UserRepository userRepository, CloudinaryService cloudinaryService)
         {
             _userRepository = userRepository;
+            _cloudinaryService = cloudinaryService;
         }
 
         // GET: api/User
@@ -38,11 +42,24 @@ namespace twist_and_solve_backend.Controllers
 
         // POST: api/User
         [HttpPost]
-        public IActionResult AddUser([FromBody] User user)
+        public async Task<IActionResult> AddUserAsync([FromForm] UserImageUpload user)
         {
+            User user1 = new User
+            {
+                Username = user.Username,
+                Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                DateJoined = user.DateJoined,
+                ProgressLevel = user.ProgressLevel
+            };
+            
             if (ModelState.IsValid)
             {
-                bool isInserted = _userRepository.Insert(user);
+                if (user.ProfileImage != null)
+                {
+                    user1.ProfilePicture = await _cloudinaryService.UploadImageAsync(user.ProfileImage);
+                }
+                bool isInserted = _userRepository.Insert(user1);
                 if (isInserted)
                 {
                     return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user);
@@ -54,8 +71,18 @@ namespace twist_and_solve_backend.Controllers
 
         // PUT: api/User/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        public async Task<IActionResult> UpdateUserAsync(int id, [FromForm] UserImageUpload user)
         {
+            User user1 = new User
+            {
+                UserId=user.UserId,
+                Username = user.Username,
+                Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                DateJoined = user.DateJoined,
+                ProgressLevel = user.ProgressLevel
+            };
+
             if (id != user.UserId)
             {
                 return BadRequest("User ID mismatch.");
@@ -63,7 +90,11 @@ namespace twist_and_solve_backend.Controllers
 
             if (ModelState.IsValid)
             {
-                bool isUpdated = _userRepository.Update(user);
+                if (user.ProfileImage != null)
+                {
+                    user1.ProfilePicture = await _cloudinaryService.UploadImageAsync(user.ProfileImage);
+                }
+                bool isUpdated = _userRepository.Update(user1);
                 if (isUpdated)
                 {
                     return Ok(user);

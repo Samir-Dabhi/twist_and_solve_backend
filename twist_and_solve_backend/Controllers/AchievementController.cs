@@ -1,18 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Runtime.Intrinsics.X86;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
+using twist_and_solve_backend.Services;
 
 namespace twist_and_solve_backend.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
+    [Authorize]
+    
     public class AchievementController : ControllerBase
     {
         private readonly AchievementRepository _achievementRepository;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public AchievementController(AchievementRepository achievementRepository)
+        public AchievementController(AchievementRepository achievementRepository, CloudinaryService cloudinaryService)
         {
             _achievementRepository = achievementRepository;
+            _cloudinaryService = cloudinaryService; 
         }
 
         // GET: api/Achievement
@@ -37,10 +45,21 @@ namespace twist_and_solve_backend.Controllers
 
         // POST: api/Achievement
         [HttpPost]
-        public IActionResult AddAchievement([FromBody] AchievementModel achievement)
+        public async Task<IActionResult> AddAchievementAsync([FromForm] AchievementUploadModel AchiachievementUpload)
         {
+            AchievementModel achievement = new AchievementModel
+            {
+                AchievementId = AchiachievementUpload.AchievementId,
+                Title = AchiachievementUpload.Title,
+                Description = AchiachievementUpload.Description,
+            };
+
             if (ModelState.IsValid)
             {
+                if (AchiachievementUpload.IconUrl != null)
+                {
+                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(AchiachievementUpload.IconUrl);
+                }
                 bool isInserted = _achievementRepository.InsertAchievement(achievement);
                 if (isInserted)
                 {
@@ -53,8 +72,14 @@ namespace twist_and_solve_backend.Controllers
 
         // PUT: api/Achievement/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateAchievement(int id, [FromBody] AchievementModel achievement)
+        public async Task<IActionResult> UpdateAchievementAsync(int id, [FromForm] AchievementUploadModel AchiachievementUpload)
         {
+            AchievementModel achievement = new AchievementModel
+            {
+                AchievementId = AchiachievementUpload.AchievementId,
+                Title = AchiachievementUpload.Title,
+                Description = AchiachievementUpload.Description,
+            };
             if (id != achievement.AchievementId)
             {
                 return BadRequest("Achievement ID mismatch.");
@@ -62,6 +87,10 @@ namespace twist_and_solve_backend.Controllers
 
             if (ModelState.IsValid)
             {
+                if (AchiachievementUpload.IconUrl != null)
+                {
+                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(AchiachievementUpload.IconUrl);
+                }
                 bool isUpdated = _achievementRepository.UpdateAchievement(achievement);
                 if (isUpdated)
                 {

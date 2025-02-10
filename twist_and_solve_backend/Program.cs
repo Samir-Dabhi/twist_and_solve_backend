@@ -1,8 +1,32 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 using twist_and_solve_backend.Data;
+using twist_and_solve_backend.Models;
+using twist_and_solve_backend.Services;
 using twist_and_solve_backend.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load JWT settings from appsettings.json
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
 
 builder.Services.AddCors(options =>
 {
@@ -14,15 +38,45 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Configure Swagger with JWT authentication
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Twist and Solve API", Version = "v1" });
 
-//builder.Services.AddControllers()
-//    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AchievementValidator>());
-// Add services to the container.
+    // Add JWT Authentication to Swagger
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Enter the JWT token like this: Bearer {your_token_here}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddScoped<CloudinaryService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<JwtService>();
+
+// Register repositories
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<AlgorithmRepository>();
 builder.Services.AddScoped<AchievementRepository>();
@@ -34,18 +88,17 @@ builder.Services.AddScoped<VideoRepository>();
 builder.Services.AddScoped<UserAchievementRepository>();
 builder.Services.AddScoped<UserProgressRepository>();
 
-
 var app = builder.Build();
 
 app.UseCors("AllowAll");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication(); // Ensure authentication middleware is enabled
 app.UseAuthorization();
 
 app.MapControllers();
