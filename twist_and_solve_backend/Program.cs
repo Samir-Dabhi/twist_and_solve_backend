@@ -95,6 +95,7 @@ builder.Services.AddSingleton<JwtService>();
 
 // Register repositories
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<AuthRepository>();
 builder.Services.AddScoped<AlgorithmRepository>();
 builder.Services.AddScoped<AchievementRepository>();
 builder.Services.AddScoped<FeedbackRepository>();

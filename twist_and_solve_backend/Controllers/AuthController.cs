@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using twist_and_solve_backend.Data;
+using twist_and_solve_backend.Models;
 using twist_and_solve_backend.Services;
 
 namespace twist_and_solve_backend.Controllers
@@ -10,12 +12,14 @@ namespace twist_and_solve_backend.Controllers
     {
         #region Fields
         private readonly JwtService _jwtService;
+        private readonly AuthRepository _authRepository;
         #endregion
 
         #region Constructor
-        public AuthController(JwtService jwtService)
+        public AuthController(JwtService jwtService, AuthRepository authRepository)
         {
             _jwtService = jwtService;
+            _authRepository = authRepository;
         }
         #endregion
 
@@ -23,13 +27,13 @@ namespace twist_and_solve_backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            if (request.Username == "ScorpionKing" && request.Password == "!#(!#^")
+            var admin  = _authRepository.adminAuth(request.Username, request.Password);
+            if (admin == null)
             {
-                var token = _jwtService.GenerateToken("1", "Admin");
-                return Ok(new { Token = token });
+                return NotFound("Wrong User Name of Password");
             }
-
-            return Unauthorized();
+            var token = _jwtService.GenerateToken("1", "Admin");
+            return Ok(new { Token = token });
         }
         #endregion
     }
