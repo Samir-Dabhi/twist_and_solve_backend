@@ -1,22 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("[controller]")]
     [ApiController]
     public class SolveController : ControllerBase
     {
+        #region Fields
         private readonly SolveRepository _solveRepository;
+        #endregion
 
+        #region Constructor
         public SolveController(SolveRepository solveRepository)
         {
             _solveRepository = solveRepository;
         }
+        #endregion
 
-        // GET: api/Solve
+        #region Solve Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllSolves()
         {
             List<SolveModel> solves = _solveRepository.GetAllSolves();
@@ -27,8 +34,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(solves);
         }
 
-        // GET: api/Solve/{userId}
         [HttpGet("user/{userId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetSolvesByUserId(int userId)
         {
             List<SolveModel> solves = _solveRepository.GetSolvesByUserId(userId);
@@ -39,8 +46,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(solves);
         }
 
-        // GET: api/Solve/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetSolveById(int id)
         {
             var solve = _solveRepository.GetAllSolves().FirstOrDefault(s => s.SolveId == id);
@@ -50,9 +57,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(solve);
         }
+        #endregion
 
-        // POST: api/Solve
+        #region Solve Management
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult AddSolve([FromBody] SolveModel solve)
         {
             if (ModelState.IsValid)
@@ -67,8 +76,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/Solve/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult UpdateSolve(int id, [FromBody] SolveModel solve)
         {
             if (id != solve.SolveId)
@@ -88,8 +97,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Solve/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult DeleteSolve(int id)
         {
             bool isDeleted = _solveRepository.DeleteSolve(id);
@@ -99,5 +108,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Solve with ID {id} not found.");
         }
+        #endregion
     }
+    #endregion
 }

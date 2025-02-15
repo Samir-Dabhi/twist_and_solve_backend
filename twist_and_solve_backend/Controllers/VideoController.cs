@@ -1,23 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 using System.Collections.Generic;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("[controller]")]
     [ApiController]
     public class VideoController : ControllerBase
     {
+        #region Fields
         private readonly VideoRepository _videoRepository;
+        #endregion
 
+        #region Constructor
         public VideoController(VideoRepository videoRepository)
         {
             _videoRepository = videoRepository;
         }
+        #endregion
 
-        // GET: api/Video
+        #region Video Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAllVideos()
         {
             List<VideoModel> videos = _videoRepository.GetAllVideos();
@@ -28,8 +35,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(videos);
         }
 
-        // GET: api/Video/ByLessonId/{lessonId}
         [HttpGet("ByLessonId/{lessonId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetVideosByLessonId(int lessonId)
         {
             List<VideoModel> videos = _videoRepository.GetVideosByLessonId(lessonId);
@@ -40,8 +47,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(videos);
         }
 
-        // GET: api/Video/{videoId}
         [HttpGet("{videoId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetVideoById(int videoId)
         {
             VideoModel video = _videoRepository.GetVideoById(videoId);
@@ -51,9 +58,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(video);
         }
+        #endregion
 
-        // POST: api/Video
+        #region Video Management
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateVideo([FromBody] VideoModel video)
         {
             if (video == null)
@@ -69,8 +78,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest("Failed to create video.");
         }
 
-        // PUT: api/Video/{videoId}
         [HttpPut("{videoId}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateVideo(int videoId, [FromBody] VideoModel video)
         {
             if (video == null || video.VideoId != videoId)
@@ -86,8 +95,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest("Failed to update video.");
         }
 
-        // DELETE: api/Video/{videoId}
         [HttpDelete("{videoId}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteVideo(int videoId)
         {
             bool isDeleted = _videoRepository.DeleteVideo(videoId);
@@ -97,5 +106,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Video with ID {videoId} not found.");
         }
+        #endregion
     }
+    #endregion
 }

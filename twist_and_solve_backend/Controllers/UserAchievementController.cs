@@ -1,30 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("[controller]")]
     [ApiController]
     public class UserAchievementController : ControllerBase
     {
+        #region Fields
         private readonly UserAchievementRepository _userAchievementRepository;
+        #endregion
 
+        #region Constructor
         public UserAchievementController(UserAchievementRepository userAchievementRepository)
         {
             _userAchievementRepository = userAchievementRepository;
         }
+        #endregion
 
-        // GET: api/UserAchievement
+        #region Achievement Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAllUserAchievements()
         {
             var userAchievements = _userAchievementRepository.GetAllUserAchievements();
             return Ok(userAchievements);
         }
 
-        // GET: api/UserAchievement/{userId}
         [HttpGet("user/{userId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetUserAchievementsByUserId(int userId)
         {
             var userAchievements = _userAchievementRepository.GetUserAchievementsByUserId(userId);
@@ -34,9 +41,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(userAchievements);
         }
+        #endregion
 
-        // POST: api/UserAchievement
+        #region Achievement Management
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult AddUserAchievement([FromBody] UserAchievementUploadModel userAchievement)
         {
             if (ModelState.IsValid)
@@ -51,8 +60,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/UserAchievement/{userAchievementId}
         [HttpPut("{userAchievementId}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateUserAchievement(int userAchievementId, [FromBody] UserAchievementUploadModel userAchievement)
         {
             if (userAchievementId != userAchievement.UserAchievementId)
@@ -72,8 +81,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/UserAchievement/{userAchievementId}
         [HttpDelete("{userAchievementId}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteUserAchievement(int userAchievementId)
         {
             var isDeleted = _userAchievementRepository.DeleteUserAchievement(userAchievementId);
@@ -83,5 +92,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"User achievement with ID {userAchievementId} not found.");
         }
+        #endregion
     }
+    #endregion
 }

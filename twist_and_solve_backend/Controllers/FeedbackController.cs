@@ -1,30 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("/[controller]")]
     [ApiController]
     public class FeedbackController : ControllerBase
     {
+        #region Fields
         private readonly FeedbackRepository _feedbackRepository;
+        #endregion
 
+        #region Constructor
         public FeedbackController(FeedbackRepository feedbackRepository)
         {
             _feedbackRepository = feedbackRepository;
         }
+        #endregion
 
-        // GET: api/Feedback
+        #region Feedback Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllFeedbacks()
         {
             List<FeedbackModel> feedbacks = _feedbackRepository.GetAllFeedbacks();
             return Ok(feedbacks);
         }
 
-        // GET: api/Feedback/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetFeedbackById(int id)
         {
             FeedbackModel feedback = _feedbackRepository.GetFeedbackById(id);
@@ -34,9 +41,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(feedback);
         }
+        #endregion
 
-        // POST: api/Feedback
+        #region Feedback Management
         [HttpPost]
+        [Authorize(Roles = "User")]
         public IActionResult AddFeedback([FromBody] FeedbackModel feedback)
         {
             if (ModelState.IsValid)
@@ -51,8 +60,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/Feedback/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "User")]
         public IActionResult UpdateFeedback(int id, [FromBody] FeedbackModel feedback)
         {
             if (id != feedback.FeedbackId)
@@ -72,8 +81,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Feedback/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "User")]
         public IActionResult DeleteFeedback(int id)
         {
             bool isDeleted = _feedbackRepository.DeleteFeedback(id);
@@ -83,5 +92,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Feedback with ID {id} not found.");
         }
+        #endregion
     }
+    #endregion
 }

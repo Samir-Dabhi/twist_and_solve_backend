@@ -5,8 +5,8 @@ using System.Text;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 using twist_and_solve_backend.Services;
-using twist_and_solve_backend.Validators;
-
+using FluentValidation.AspNetCore;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Load JWT settings from appsettings.json
@@ -25,6 +25,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = jwtSettings["Issuer"],
             ValidAudience = jwtSettings["Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Headers["Authorization"].ToString();
+                if (!string.IsNullOrEmpty(token) && !token.StartsWith("Bearer "))
+                {
+                    context.Token = token; // Directly assign the raw token
+                }
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -70,7 +83,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-builder.Services.AddScoped<CloudinaryService>();
+builder.Services.AddScoped<CloudinaryService>(); 
+
+//builder.Services.AddControllers()
+//    .AddFluentValidation(fv =>
+//        fv.RegisterValidatorsFromAssemblies(new[] { Assembly.GetExecutingAssembly() }));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

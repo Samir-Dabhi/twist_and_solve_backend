@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
@@ -9,23 +10,27 @@ namespace twist_and_solve_backend.Controllers
     [ApiController]
     public class AlgorithmController : ControllerBase
     {
+        #region Fields
         private readonly AlgorithmRepository _algorithmRepository;
+        #endregion
 
+        #region Constructor
         public AlgorithmController(AlgorithmRepository algorithmRepository)
         {
             _algorithmRepository = algorithmRepository;
         }
+        #endregion
 
-        // GET: /Algorithm
+        #region Algorithm Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAllAlgorithms()
         {
             var algorithms = _algorithmRepository.GetAllAlgorithms();
             return Ok(algorithms);
         }
-
-        // GET: /Algorithm/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAlgorithmById(int id)
         {
             var algorithm = _algorithmRepository.GetAlgorithmById(id);
@@ -36,8 +41,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(algorithm);
         }
 
-        // GET: /Algorithm/Lesson/{lessonId}
         [HttpGet("Lesson/{lessonId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAlgorithmsByLessonId(int lessonId)
         {
             var algorithms = _algorithmRepository.GetAlgorithmsByLessonId(lessonId);
@@ -47,9 +52,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(algorithms);
         }
+        #endregion
 
-        // POST: /Algorithm
+        #region Algorithm Management
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddAlgorithm([FromBody] AlgorithmModel algorithm)
         {
             if (ModelState.IsValid)
@@ -64,8 +71,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: /Algorithm/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateAlgorithm(int id, [FromBody] AlgorithmModel algorithm)
         {
             if (id != algorithm.AlgorithmId)
@@ -85,8 +92,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: /Algorithm/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteAlgorithm(int id)
         {
             bool isDeleted = _algorithmRepository.Delete(id);
@@ -96,5 +103,6 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Algorithm with ID {id} not found.");
         }
+        #endregion
     }
 }

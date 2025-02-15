@@ -208,6 +208,36 @@ namespace twist_and_solve_backend.Data
             }
             return null;
         }
+        public bool UpdatePassword(string email, string newPassword)
+        {
+
+            string connectionString = GetConnectionString();
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(newPassword))
+            {
+                return false;
+            }
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("PR_User_UpdatePassword", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@newPassward", newPassword);
+
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating user: {ex.Message}");
+                return false;
+            }
+        }
 
     }
 }

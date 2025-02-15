@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using twist_and_solve_backend.Data;
@@ -6,19 +7,25 @@ using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("[controller]")]
     [ApiController]
     public class UserProgressController : ControllerBase
     {
+        #region Fields
         private readonly UserProgressRepository _userProgressRepository;
+        #endregion
 
+        #region Constructor
         public UserProgressController(UserProgressRepository userProgressRepository)
         {
             _userProgressRepository = userProgressRepository;
         }
+        #endregion
 
-        // GET: api/UserProgress
+        #region Progress Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllUserProgress()
         {
             try
@@ -36,8 +43,8 @@ namespace twist_and_solve_backend.Controllers
             }
         }
 
-        // GET: api/UserProgress/{userId}
         [HttpGet("{userId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetUserProgressByUserId(int userId)
         {
             try
@@ -54,9 +61,11 @@ namespace twist_and_solve_backend.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        #endregion
 
-        // POST: api/UserProgress
+        #region Progress Management
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult CreateUserProgress([FromBody] UserProgressModel progress)
         {
             if (progress == null)
@@ -79,8 +88,8 @@ namespace twist_and_solve_backend.Controllers
             }
         }
 
-        // PUT: api/UserProgress/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult UpdateUserProgress(int id, [FromBody] UserProgressModel progress)
         {
             if (progress == null || progress.ProgressId != id)
@@ -103,8 +112,8 @@ namespace twist_and_solve_backend.Controllers
             }
         }
 
-        // DELETE: api/UserProgress/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles ="Admin")]
         public IActionResult DeleteUserProgress(int id)
         {
             try
@@ -121,5 +130,7 @@ namespace twist_and_solve_backend.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        #endregion
     }
+    #endregion
 }

@@ -1,30 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("/[controller]")]
     [ApiController]
     public class LessonController : ControllerBase
     {
+        #region Fields
         private readonly LessonRepository _lessonRepository;
+        #endregion
 
+        #region Constructor
         public LessonController(LessonRepository lessonRepository)
         {
             _lessonRepository = lessonRepository;
         }
+        #endregion
 
-        // GET: api/Lesson
+        #region Lesson Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetAllLessons()
         {
             List<LessonModel> lessons = _lessonRepository.GetAllLessons();
             return Ok(lessons);
         }
 
-        // GET: api/Lesson/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetLessonById(int id)
         {
             LessonModel lesson = _lessonRepository.GetLessonById(id);
@@ -34,9 +41,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(lesson);
         }
+        #endregion
 
-        // POST: api/Lesson
+        #region Lesson Management
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddLesson([FromBody] LessonModel lesson)
         {
             if (ModelState.IsValid)
@@ -51,8 +60,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/Lesson/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateLesson(int id, [FromBody] LessonModel lesson)
         {
             if (id != lesson.LessonId)
@@ -72,8 +81,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Lesson/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteLesson(int id)
         {
             bool isDeleted = _lessonRepository.DeleteLesson(id);
@@ -83,5 +92,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Lesson with ID {id} not found.");
         }
+        #endregion
     }
+    #endregion
 }

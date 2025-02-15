@@ -1,30 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 
 namespace twist_and_solve_backend.Controllers
 {
+    #region Controller
     [Route("/[controller]")]
     [ApiController]
     public class SettingsController : ControllerBase
     {
+        #region Fields
         private readonly SettingsRepository _settingsRepository;
+        #endregion
 
+        #region Constructor
         public SettingsController(SettingsRepository settingsRepository)
         {
             _settingsRepository = settingsRepository;
         }
+        #endregion
 
-        // GET: api/Settings
+        #region Settings Retrieval
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllSettings()
         {
             List<SettingsModel> settings = _settingsRepository.GetAllSettings();
             return Ok(settings);
         }
 
-        // GET: api/Settings/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetSettingsById(int id)
         {
             SettingsModel settings = _settingsRepository.GetSettingsById(id);
@@ -35,8 +42,8 @@ namespace twist_and_solve_backend.Controllers
             return Ok(settings);
         }
 
-        // GET: api/Settings/user/{userId}
         [HttpGet("user/{userId}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetSettingsByUserId(int userId)
         {
             SettingsModel settings = _settingsRepository.GetSettingsByUserId(userId);
@@ -46,9 +53,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(settings);
         }
+        #endregion
 
-        // POST: api/Settings
+        #region Settings Management
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddSettings([FromBody] SettingsModel settings)
         {
             if (ModelState.IsValid)
@@ -63,8 +72,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT: api/Settings/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult UpdateSettings(int id, [FromBody] SettingsModel settings)
         {
             if (id != settings.SettingId)
@@ -84,8 +93,8 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Settings/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteSettings(int id)
         {
             bool isDeleted = _settingsRepository.DeleteSetting(id);
@@ -95,5 +104,7 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"Settings with ID {id} not found.");
         }
+        #endregion
     }
+    #endregion
 }

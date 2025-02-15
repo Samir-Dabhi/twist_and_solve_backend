@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
@@ -11,25 +12,32 @@ namespace twist_and_solve_backend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        #region Fields
         private readonly UserRepository _userRepository;
         private readonly CloudinaryService _cloudinaryService;
+        private readonly JwtService _jwtService;
+        #endregion
 
-        public UserController(UserRepository userRepository, CloudinaryService cloudinaryService)
+        #region Constructor
+        public UserController(UserRepository userRepository, CloudinaryService cloudinaryService, JwtService jwtService)
         {
             _userRepository = userRepository;
             _cloudinaryService = cloudinaryService;
+            _jwtService = jwtService;
         }
+        #endregion
 
-        // GET: api/User
+        #region GetAllUsers
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllUsers()
         {
             var users = _userRepository.GetAllUsers();
             return Ok(users);
         }
 
-        // GET: api/User/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult GetUserById(int id)
         {
             var user = _userRepository.GetUserById(id);
@@ -39,9 +47,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(user);
         }
+        #endregion
 
-        // POST: api/User
+        #region Add User
         [HttpPost]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> AddUserAsync([FromForm] UserImageUpload user)
         {
             User user1 = new User
@@ -52,7 +62,7 @@ namespace twist_and_solve_backend.Controllers
                 DateJoined = user.DateJoined,
                 ProgressLevel = user.ProgressLevel
             };
-            
+
             if (ModelState.IsValid)
             {
                 if (user.ProfileImage != null)
@@ -68,14 +78,16 @@ namespace twist_and_solve_backend.Controllers
             }
             return BadRequest(ModelState);
         }
+        #endregion
 
-        // PUT: api/User/{id}
+        #region Update User
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUserAsync(int id, [FromForm] UserImageUpload user)
         {
             User user1 = new User
             {
-                UserId=user.UserId,
+                UserId = user.UserId,
                 Username = user.Username,
                 Email = user.Email,
                 PasswordHash = user.PasswordHash,
@@ -103,9 +115,11 @@ namespace twist_and_solve_backend.Controllers
             }
             return BadRequest(ModelState);
         }
+        #endregion
 
-        // DELETE: api/User/{id}
+        #region Delete User
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteUser(int id)
         {
             bool isDeleted = _userRepository.Delete(id);
@@ -115,18 +129,49 @@ namespace twist_and_solve_backend.Controllers
             }
             return NotFound($"User with ID {id} not found.");
         }
+        #endregion
 
-        // GET: api/User/auth
+        #region Authentication
         [HttpPost("auth")]
-        public IActionResult UserAuth([FromBody] User users)
+        public IActionResult UserAuth([FromBody] UserLogin users)
         {
             var user = _userRepository.UserAuth(users.Email, users.PasswordHash);
             if (user == null)
             {
-                return NotFound($"email or password is wrong");
+                return NotFound("email or password is wrong");
             }
-            return Ok(user);
+            var token = _jwtService.GenerateToken(users.Email, "User");
+            return Ok(new { Token = token,User = user});
         }
+        #endregion
 
+        #region reset Password
+        [HttpPost("resetpassword")]
+        [Authorize(Roles = "Reset")]
+        public IActionResult ResetPassword([FromBody] UserLogin data)
+        {
+            string email = data.Email;
+            string newPassword = data.PasswordHash;
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(newPassword))
+            {
+                return BadRequest(new { message = "Email and new password are required" });
+            }
+
+            bool isUpdated = _userRepository.UpdatePassword(email, newPassword);
+            if (isUpdated)
+                return Ok(new { message = "Password reset successfully" });
+
+            return BadRequest(new { message = "Failed to reset password" });
+        }
+        #endregion
     }
+
+    #region Models
+    public class UserLogin
+    {
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
+    }
+    #endregion
 }

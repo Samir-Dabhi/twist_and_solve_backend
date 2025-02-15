@@ -50,9 +50,13 @@
               "target": "Package",
               "version": "[1.27.2, )"
             },
-            "FluentValidation": {
+            "FluentValidation.AspNetCore": {
               "target": "Package",
-              "version": "[11.9.2, )"
+              "version": "[11.3.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.10.0, )"
             },
             "Microsoft.AspNet.Cors": {
               "target": "Package",
@@ -69,6 +73,10 @@
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.2.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
