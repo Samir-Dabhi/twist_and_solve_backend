@@ -6,12 +6,18 @@ D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\twist_and_solve_backend.pdb
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Azure.Core.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Azure.Identity.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\BouncyCastle.Cryptography.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\CloudinaryDotNet.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\FluentValidation.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\FluentValidation.AspNetCore.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\FluentValidation.DependencyInjectionExtensions.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\MailKit.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Web.Cors.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.Bcl.AsyncInterfaces.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.Bcl.Memory.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.Data.SqlClient.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -36,6 +42,7 @@ D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\MimeKit.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
@@ -49,6 +56,7 @@ D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.IO.Pipelines.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Memory.Data.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Runtime.Caching.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Security.Cryptography.Pkcs.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Text.Encodings.Web.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\System.Text.Json.dll
@@ -69,5 +77,6 @@ D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net8.0\System.Runtime.Caching.dll
+D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 D:\projects\cube_trainer\Backend\twist_and_solve_backend\twist_and_solve_backend\obj\Release\net8.0\PubTmp\Out\twist_and_solve_backend.deps.json
