@@ -42,7 +42,9 @@ namespace twist_and_solve_backend.Data
                                 Name = reader.GetString(reader.GetOrdinal("name")),
                                 Notation = reader.GetString(reader.GetOrdinal("notation")),
                                 Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString(reader.GetOrdinal("description")),
-                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id"))
+                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id")),
+                                ImageUrl = reader.IsDBNull(reader.GetOrdinal("image_url")) ? null : reader.GetString(reader.GetOrdinal("image_url")),
+                                category = reader.IsDBNull(reader.GetOrdinal("category")) ? null : reader.GetString(reader.GetOrdinal("category"))
                             };
                             algorithms.Add(algorithm);
                         }
@@ -76,7 +78,9 @@ namespace twist_and_solve_backend.Data
                                 Name = reader.GetString(reader.GetOrdinal("name")),
                                 Notation = reader.GetString(reader.GetOrdinal("notation")),
                                 Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString(reader.GetOrdinal("description")),
-                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id"))
+                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id")),
+                                ImageUrl = reader.IsDBNull(reader.GetOrdinal("image_url")) ? null : reader.GetString(reader.GetOrdinal("image_url")),
+                                category = reader.IsDBNull(reader.GetOrdinal("category")) ? null : reader.GetString(reader.GetOrdinal("category"))
                             };
                         }
                     }
@@ -110,7 +114,46 @@ namespace twist_and_solve_backend.Data
                                 Name = reader.GetString(reader.GetOrdinal("name")),
                                 Notation = reader.GetString(reader.GetOrdinal("notation")),
                                 Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString(reader.GetOrdinal("description")),
-                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id"))
+                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id")),
+                                ImageUrl = reader.IsDBNull(reader.GetOrdinal("image_url")) ? null : reader.GetString(reader.GetOrdinal("image_url")),
+                                category = reader.IsDBNull(reader.GetOrdinal("category")) ? null : reader.GetString(reader.GetOrdinal("category"))
+                            };
+                            algorithms.Add(algorithm);
+                        }
+                    }
+                }
+            }
+            return algorithms;
+        }
+
+        // Get Algorithm by category
+        public List<AlgorithmModel> GetAlgorithmsByCategory(String category)
+        {
+            string connectionString = GetConnectionString();
+            List<AlgorithmModel> algorithms = new List<AlgorithmModel>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand command = sqlConnection.CreateCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "PR_tbl_Algorithm_Select_By_Category";
+                    command.Parameters.AddWithValue("@category", category);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AlgorithmModel algorithm = new AlgorithmModel
+                            {
+                                AlgorithmId = reader.GetInt32(reader.GetOrdinal("algorithm_id")),
+                                Name = reader.GetString(reader.GetOrdinal("name")),
+                                Notation = reader.GetString(reader.GetOrdinal("notation")),
+                                Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString(reader.GetOrdinal("description")),
+                                LessonId = reader.IsDBNull(reader.GetOrdinal("lesson_id")) ? null : reader.GetInt32(reader.GetOrdinal("lesson_id")),
+                                ImageUrl = reader.IsDBNull(reader.GetOrdinal("image_url")) ? null : reader.GetString(reader.GetOrdinal("image_url")),
+                                category = reader.IsDBNull(reader.GetOrdinal("category")) ? null : reader.GetString(reader.GetOrdinal("category"))
                             };
                             algorithms.Add(algorithm);
                         }
@@ -136,6 +179,8 @@ namespace twist_and_solve_backend.Data
                     cmd.Parameters.AddWithValue("@notation", algorithm.Notation);
                     cmd.Parameters.AddWithValue("@description", (object)algorithm.Description ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@lesson_id", (object)algorithm.LessonId ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@image_url", (object)algorithm.ImageUrl ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@category", (object)algorithm.category ?? DBNull.Value);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -166,6 +211,8 @@ namespace twist_and_solve_backend.Data
                     cmd.Parameters.AddWithValue("@notation", algorithm.Notation);
                     cmd.Parameters.AddWithValue("@description", (object)algorithm.Description ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@lesson_id", (object)algorithm.LessonId ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@image_url", (object)algorithm.ImageUrl ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@category", (object)algorithm.category ?? DBNull.Value);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();

@@ -7,5 +7,17 @@
         public string Notation { get; set; } // Algorithm notation (e.g., Rubik's Cube moves)
         public string? Description { get; set; } // Optional description
         public int? LessonId { get; set; }   // Foreign key linking to Lessons table
+        public string? ImageUrl { get; set; }
+        public string? category { get; set; }
+    }
+    public class AlgorithmUploadModel
+    {
+        public int AlgorithmId { get; set; } // Primary key
+        public string Name { get; set; }     // Algorithm name
+        public string Notation { get; set; } // Algorithm notation (e.g., Rubik's Cube moves)
+        public string? Description { get; set; } // Optional description
+        public int? LessonId { get; set; }   // Foreign key linking to Lessons table
+        public IFormFile? ImageUrl { get; set; }
+        public string? category { get; set; }
     }
 }

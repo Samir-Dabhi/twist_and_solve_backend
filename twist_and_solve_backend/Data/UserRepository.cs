@@ -88,7 +88,40 @@ namespace twist_and_solve_backend.Data
             }
             return null;
         }
+        // Get User by Email
+        public User GetUserByEmail(String userId)
+        {
+            string connectionString = GetConnectionString();
 
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand command = sqlConnection.CreateCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "PR_tbl_User_GetByEmail"; // Stored procedure to get user by email
+                    command.Parameters.AddWithValue("@email", userId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserId = reader.GetInt32(reader.GetOrdinal("user_id")),
+                                Username = reader.GetString(reader.GetOrdinal("username")),
+                                Email = reader.GetString(reader.GetOrdinal("email")),
+                                PasswordHash = reader.GetString(reader.GetOrdinal("password_hash")),
+                                DateJoined = reader.GetDateTime(reader.GetOrdinal("date_joined")),
+                                ProfilePicture = reader.GetString(reader.GetOrdinal("profile_picture")),
+                                ProgressLevel = reader.GetInt32(reader.GetOrdinal("progress_level"))
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         // Insert a user
         public bool Insert(User user)
         {

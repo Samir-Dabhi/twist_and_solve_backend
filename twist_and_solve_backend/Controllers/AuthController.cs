@@ -32,7 +32,7 @@ namespace twist_and_solve_backend.Controllers
             {
                 return NotFound("Wrong User Name of Password");
             }
-            var token = _jwtService.GenerateToken("1", "Admin");
+            var token = _jwtService.GenerateToken("51", "Admin");
             return Ok(new { Token = token });
         }
         #endregion

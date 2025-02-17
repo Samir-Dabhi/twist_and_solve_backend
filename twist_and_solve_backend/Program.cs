@@ -7,6 +7,7 @@ using twist_and_solve_backend.Models;
 using twist_and_solve_backend.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Load JWT settings from appsettings.json
@@ -83,11 +84,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-builder.Services.AddScoped<CloudinaryService>(); 
-
-//builder.Services.AddControllers()
-//    .AddFluentValidation(fv =>
-//        fv.RegisterValidatorsFromAssemblies(new[] { Assembly.GetExecutingAssembly() }));
+builder.Services.AddScoped<CloudinaryService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -116,7 +113,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication(); // Ensure authentication middleware is enabled
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

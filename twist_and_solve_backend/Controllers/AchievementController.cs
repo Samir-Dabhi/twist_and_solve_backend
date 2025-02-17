@@ -77,6 +77,7 @@ namespace twist_and_solve_backend.Controllers
 
         #region Update Achievement
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAchievementAsync(int id, [FromForm] AchievementUploadModel AchiachievementUpload)
         {
             AchievementModel achievement = new AchievementModel
@@ -109,6 +110,7 @@ namespace twist_and_solve_backend.Controllers
 
         #region Delete Achievement
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteAchievement(int id)
         {
             bool isDeleted = _achievementRepository.DeleteAchievement(id);

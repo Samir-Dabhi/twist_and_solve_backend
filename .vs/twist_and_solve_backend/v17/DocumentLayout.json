@@ -1,7 +1,32 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\controllers\\algorithmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\controllers\\algorithmcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\data\\algorithmrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\data\\algorithmrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\controllers\\achievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\controllers\\achievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\controllers\\otpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\controllers\\otpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|d:\\projects\\cube_trainer\\backend\\twist_and_solve_backend\\twist_and_solve_backend\\services\\otpservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CA0DD2F-9266-4D56-A2C0-8F5A09128270}|twist_and_solve_backend\\twist_and_solve_backend.csproj|solutionrelative:twist_and_solve_backend\\services\\otpservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +34,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AlgorithmRepository.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Data\\AlgorithmRepository.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Data\\AlgorithmRepository.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Data\\AlgorithmRepository.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Data\\AlgorithmRepository.cs",
+              "ViewState": "AQIAAH8AAAAAAAAAAAAiwIEAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T07:21:12.673Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -22,6 +60,68 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AlgorithmController.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\AlgorithmController.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Controllers\\AlgorithmController.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\AlgorithmController.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Controllers\\AlgorithmController.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAMwDoAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T07:03:17.771Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Services\\JwtService.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Services\\JwtService.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Services\\JwtService.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Services\\JwtService.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAYwC0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T03:33:58.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AchievementController.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\AchievementController.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Controllers\\AchievementController.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\AchievementController.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Controllers\\AchievementController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T03:22:58.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OtpServices.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Services\\OtpServices.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Services\\OtpServices.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Services\\OtpServices.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Services\\OtpServices.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAmwEgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T03:00:32.321Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OtpController.cs",
+              "DocumentMoniker": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\OtpController.cs",
+              "RelativeDocumentMoniker": "twist_and_solve_backend\\Controllers\\OtpController.cs",
+              "ToolTip": "D:\\projects\\cube_trainer\\Backend\\twist_and_solve_backend\\twist_and_solve_backend\\Controllers\\OtpController.cs",
+              "RelativeToolTip": "twist_and_solve_backend\\Controllers\\OtpController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGIAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T03:00:21.911Z"
             }
           ]
         }

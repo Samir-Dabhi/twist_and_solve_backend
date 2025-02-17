@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
+using twist_and_solve_backend.Services;
 
 namespace twist_and_solve_backend.Controllers
 {
@@ -12,12 +13,14 @@ namespace twist_and_solve_backend.Controllers
     {
         #region Fields
         private readonly AlgorithmRepository _algorithmRepository;
+        private readonly CloudinaryService _cloudinaryService;
         #endregion
 
         #region Constructor
-        public AlgorithmController(AlgorithmRepository algorithmRepository)
+        public AlgorithmController(AlgorithmRepository algorithmRepository, CloudinaryService cloudinaryService)
         {
             _algorithmRepository = algorithmRepository;
+            _cloudinaryService = cloudinaryService;
         }
         #endregion
 
@@ -52,16 +55,39 @@ namespace twist_and_solve_backend.Controllers
             }
             return Ok(algorithms);
         }
+
+        [HttpGet("Category/{category}")]
+        [Authorize(Roles = ("Admin,User"))]
+        public IActionResult GetAlgorithmsByLess(String category)
+        {
+            var algorithms = _algorithmRepository.GetAlgorithmsByCategory(category);
+            if (algorithms == null || algorithms.Count == 0)
+            {
+                return NotFound($"No algorithms found this category {category}.");
+            }
+            return Ok(algorithms);
+        }
         #endregion
 
         #region Algorithm Management
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult AddAlgorithm([FromBody] AlgorithmModel algorithm)
+        public async Task<IActionResult> AddAlgorithmAsync([FromForm] AlgorithmUploadModel algorithm)
         {
+            AlgorithmModel algorithm1 = new AlgorithmModel { 
+                Name = algorithm.Name,
+                Notation = algorithm.Notation,
+                Description = algorithm.Description,
+                LessonId = algorithm.LessonId,
+                category = algorithm.category,
+            };
             if (ModelState.IsValid)
             {
-                bool isInserted = _algorithmRepository.Insert(algorithm);
+                if (algorithm.ImageUrl!=null)
+                {
+                    algorithm1.ImageUrl = await _cloudinaryService.UploadImageAsync(algorithm.ImageUrl);
+                }
+                bool isInserted = _algorithmRepository.Insert(algorithm1);
                 if (isInserted)
                 {
                     return CreatedAtAction(nameof(GetAlgorithmById), new { id = algorithm.AlgorithmId }, algorithm);
@@ -73,8 +99,18 @@ namespace twist_and_solve_backend.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateAlgorithm(int id, [FromBody] AlgorithmModel algorithm)
+        public async Task<IActionResult> UpdateAlgorithmAsync(int id, [FromForm] AlgorithmUploadModel algorithm)
         {
+            AlgorithmModel algorithm1 = new AlgorithmModel
+            {
+                AlgorithmId = algorithm.AlgorithmId,
+                Name = algorithm.Name,
+                Notation = algorithm.Notation,
+                Description = algorithm.Description,
+                LessonId = algorithm.LessonId,
+                category = algorithm.category,
+            };
+
             if (id != algorithm.AlgorithmId)
             {
                 return BadRequest("Algorithm ID mismatch.");
@@ -82,7 +118,11 @@ namespace twist_and_solve_backend.Controllers
 
             if (ModelState.IsValid)
             {
-                bool isUpdated = _algorithmRepository.Update(algorithm);
+                if (algorithm.ImageUrl != null)
+                {
+                    algorithm1.ImageUrl = await _cloudinaryService.UploadImageAsync(algorithm.ImageUrl);
+                }
+                bool isUpdated = _algorithmRepository.Update(algorithm1);
                 if (isUpdated)
                 {
                     return Ok(algorithm);
