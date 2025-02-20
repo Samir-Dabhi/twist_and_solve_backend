@@ -18,8 +18,8 @@
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public DateTime DateJoined { get; set; }
-        public IFormFile ProfileImage { get; set; }
-        public int ProgressLevel { get; set; }
+        public IFormFile? ProfileImage { get; set; }
+        public int? ProgressLevel { get; set; }
     }
 }
 

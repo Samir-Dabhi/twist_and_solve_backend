@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using twist_and_solve_backend.Data;
 using twist_and_solve_backend.Models;
 using twist_and_solve_backend.Services;
+using System;
 
 namespace twist_and_solve_backend.Controllers
 {
@@ -28,8 +29,15 @@ namespace twist_and_solve_backend.Controllers
         [HttpGet]
         public IActionResult GetAllAchievements()
         {
-            List<AchievementModel> achievements = _achievementRepository.GetAllAchievements();
-            return Ok(achievements);
+            try
+            {
+                List<AchievementModel> achievements = _achievementRepository.GetAllAchievements();
+                return Ok(achievements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
         #endregion
 
@@ -37,33 +45,46 @@ namespace twist_and_solve_backend.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAchievementById(int id)
         {
-            AchievementModel achievement = _achievementRepository.GetAchievementById(id);
-            if (achievement == null)
+            try
             {
-                return NotFound($"Achievement with ID {id} not found.");
+                var achievement = _achievementRepository.GetAchievementById(id);
+                if (achievement == null)
+                {
+                    return NotFound($"Achievement with ID {id} not found.");
+                }
+                return Ok(achievement);
             }
-            return Ok(achievement);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
         #endregion
 
         #region Add Achievement
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddAchievementAsync([FromForm] AchievementUploadModel AchiachievementUpload)
+        public async Task<IActionResult> AddAchievementAsync([FromForm] AchievementUploadModel achievementUpload)
         {
-            AchievementModel achievement = new AchievementModel
+            try
             {
-                AchievementId = AchiachievementUpload.AchievementId,
-                Title = AchiachievementUpload.Title,
-                Description = AchiachievementUpload.Description,
-            };
-
-            if (ModelState.IsValid)
-            {
-                if (AchiachievementUpload.IconUrl != null)
+                if (!ModelState.IsValid)
                 {
-                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(AchiachievementUpload.IconUrl);
+                    return BadRequest(ModelState);
                 }
+
+                var achievement = new AchievementModel
+                {
+                    AchievementId = achievementUpload.AchievementId,
+                    Title = achievementUpload.Title,
+                    Description = achievementUpload.Description,
+                };
+
+                if (achievementUpload.IconUrl != null)
+                {
+                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(achievementUpload.IconUrl);
+                }
+
                 bool isInserted = _achievementRepository.InsertAchievement(achievement);
                 if (isInserted)
                 {
@@ -71,32 +92,42 @@ namespace twist_and_solve_backend.Controllers
                 }
                 return BadRequest("Failed to add the achievement.");
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
         #endregion
 
         #region Update Achievement
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAchievementAsync(int id, [FromForm] AchievementUploadModel AchiachievementUpload)
+        public async Task<IActionResult> UpdateAchievementAsync(int id, [FromForm] AchievementUploadModel achievementUpload)
         {
-            AchievementModel achievement = new AchievementModel
+            try
             {
-                AchievementId = AchiachievementUpload.AchievementId,
-                Title = AchiachievementUpload.Title,
-                Description = AchiachievementUpload.Description,
-            };
-            if (id != achievement.AchievementId)
-            {
-                return BadRequest("Achievement ID mismatch.");
-            }
-
-            if (ModelState.IsValid)
-            {
-                if (AchiachievementUpload.IconUrl != null)
+                if (!ModelState.IsValid)
                 {
-                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(AchiachievementUpload.IconUrl);
+                    return BadRequest(ModelState);
                 }
+
+                if (id != achievementUpload.AchievementId)
+                {
+                    return BadRequest("Achievement ID mismatch.");
+                }
+
+                var achievement = new AchievementModel
+                {
+                    AchievementId = achievementUpload.AchievementId,
+                    Title = achievementUpload.Title,
+                    Description = achievementUpload.Description,
+                };
+
+                if (achievementUpload.IconUrl != null)
+                {
+                    achievement.IconUrl = await _cloudinaryService.UploadImageAsync(achievementUpload.IconUrl);
+                }
+
                 bool isUpdated = _achievementRepository.UpdateAchievement(achievement);
                 if (isUpdated)
                 {
@@ -104,7 +135,10 @@ namespace twist_and_solve_backend.Controllers
                 }
                 return BadRequest("Failed to update the achievement.");
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
         #endregion
 
@@ -113,12 +147,19 @@ namespace twist_and_solve_backend.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteAchievement(int id)
         {
-            bool isDeleted = _achievementRepository.DeleteAchievement(id);
-            if (isDeleted)
+            try
             {
-                return Ok($"Achievement with ID {id} has been deleted.");
+                bool isDeleted = _achievementRepository.DeleteAchievement(id);
+                if (isDeleted)
+                {
+                    return Ok($"Achievement with ID {id} has been deleted.");
+                }
+                return NotFound($"Achievement with ID {id} not found.");
             }
-            return NotFound($"Achievement with ID {id} not found.");
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
         #endregion
     }

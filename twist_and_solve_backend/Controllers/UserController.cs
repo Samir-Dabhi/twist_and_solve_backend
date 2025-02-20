@@ -51,17 +51,24 @@ namespace twist_and_solve_backend.Controllers
 
         #region Add User
         [HttpPost]
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,Signup")]
         public async Task<IActionResult> AddUserAsync([FromForm] UserImageUpload user)
         {
+            int progress = 0;
+            String profilepic = "https://res.cloudinary.com/dfsrzlxbv/image/upload/v1739796318/twist_and_solve/profile_pictures/ProfileAvtar_ubm36m.webp";
+            if (user.ProgressLevel!=null)
+            {
+                progress = (int)user.ProgressLevel;
+            }
             User user1 = new User
             {
                 Username = user.Username,
                 Email = user.Email,
                 PasswordHash = user.PasswordHash,
                 DateJoined = user.DateJoined,
-                ProgressLevel = user.ProgressLevel
+                ProgressLevel = progress,
             };
+            
 
             if (ModelState.IsValid)
             {
@@ -69,10 +76,16 @@ namespace twist_and_solve_backend.Controllers
                 {
                     user1.ProfilePicture = await _cloudinaryService.UploadImageAsync(user.ProfileImage);
                 }
+                else
+                {
+                    user1.ProfilePicture = profilepic;
+                }
                 bool isInserted = _userRepository.Insert(user1);
                 if (isInserted)
                 {
-                    return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user);
+                    var userfromtabel = _userRepository.GetUserByEmail(user.Email);
+                    var token = _jwtService.GenerateToken(user1.Email, "User");
+                    return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, new {token=token ,user= userfromtabel });
                 }
                 return BadRequest("Failed to add the user.");
             }
@@ -92,7 +105,7 @@ namespace twist_and_solve_backend.Controllers
                 Email = user.Email,
                 PasswordHash = user.PasswordHash,
                 DateJoined = user.DateJoined,
-                ProgressLevel = user.ProgressLevel
+                ProgressLevel = (int)user.ProgressLevel
             };
 
             if (id != user.UserId)
@@ -165,6 +178,7 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(new { message = "Failed to reset password" });
         }
         #endregion
+
     }
 
     #region Models

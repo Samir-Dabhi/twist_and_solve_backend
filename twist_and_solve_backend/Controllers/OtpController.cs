@@ -63,7 +63,35 @@ namespace twist_and_solve_backend.Controllers
             }
         }
         #endregion
+        [HttpPost("emailauth")]
+        public async Task<IActionResult> SendOtpForEmailVerification([FromBody] OtpModel otpreq)
+        {
+            string email = otpreq.Email;
 
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest(new { message = "Email is required." });
+            }
+            try
+            {
+                string otp = _otpService.GenerateOtp();
+                _otpService.StoreOtp(email, otp);
+                bool emailSent = await _otpService.SendOtpEmailAsync(email, otp);
+
+                if (emailSent)
+                    return Ok(new { message = "OTP sent successfully." });
+
+                return StatusCode(500, new { message = "Failed to send OTP. Please try again later." });
+            }
+            catch (InvalidOperationException ex) // Handle rate limiting
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
         #region OTP Verification
         [HttpPost("verifyotp")]
         public IActionResult VerifyOtp([FromBody] VerifyOtpModel data)
@@ -84,6 +112,38 @@ namespace twist_and_solve_backend.Controllers
             if (_otpService.ValidateOtp(email, otp))
             {
                 var token = _jwtService.GenerateToken(email + "reset", "Reset");
+                return Ok(new { message = "OTP verified successfully.", Token = token });
+            }
+
+            int remainingAttempts = _otpService.GetRemainingAttempts(email);
+            if (remainingAttempts > 0)
+            {
+                return BadRequest(new { message = $"Invalid OTP. You have {remainingAttempts} attempts remaining." });
+            }
+
+            return BadRequest(new { message = "Too many failed attempts. You are locked out for 10 minutes." });
+        }
+        #endregion
+        #region OTP Verification
+        [HttpPost("verifyemailotp")]
+        public IActionResult VerifyEmailOtp([FromBody] VerifyOtpModel data)
+        {
+            string email = data.Email;
+            string otp = data.Otp;
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(otp))
+            {
+                return BadRequest(new { message = "Email and OTP are required." });
+            }
+
+            if (_otpService.IsUserLockedOut(email))
+            {
+                return BadRequest(new { message = "Too many failed attempts. Please try again later." });
+            }
+
+            if (_otpService.ValidateOtp(email, otp))
+            {
+                var token = _jwtService.GenerateToken(email + "reset", "Signup");
                 return Ok(new { message = "OTP verified successfully.", Token = token });
             }
 
