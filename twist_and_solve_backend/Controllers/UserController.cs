@@ -178,10 +178,25 @@ namespace twist_and_solve_backend.Controllers
             return BadRequest(new { message = "Failed to reset password" });
         }
         #endregion
+        #region refress token
+        [HttpPost("refresh-token")]
+        public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var newTokens = _jwtService.RefreshToken(request.RefreshToken);
+            if (newTokens == null)
+                return Unauthorized("Invalid or expired refresh token");
 
+            return Ok(newTokens);
+        }
+        #endregion
     }
 
     #region Models
+
+    public class RefreshTokenRequest
+    {
+        public string RefreshToken { get; set; }
+    }
     public class UserLogin
     {
         public string Email { get; set; }

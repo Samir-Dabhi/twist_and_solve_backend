@@ -78,7 +78,7 @@ namespace twist_and_solve_backend.Services
                 using var client = new SmtpClient("smtp.gmail.com") // Change SMTP if needed
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential("dabhisamir6@gmail.com", "zgdk ckji mubn xxtb"),
+                    Credentials = new NetworkCredential("twistandsolve.samir@gmail.com", "kbuu kzkw aixi qzug"),
                     EnableSsl = true,
                 };
 
@@ -145,7 +145,7 @@ namespace twist_and_solve_backend.Services
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress("dabhisamir6@gmail.com"),
+                    From = new MailAddress("twistandsolve.samir@gmail.com", "Twist And Solve"),
                     Subject = "Your OTP Code",
                     Body = htmlBody,
                     IsBodyHtml = true, // Set to true for HTML formatting

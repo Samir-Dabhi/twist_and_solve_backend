@@ -195,8 +195,13 @@ namespace twist_and_solve_backend.Data
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("@user_id", userId);
-
+                    try
+                    {
+                        cmd.Parameters.AddWithValue("@user_id", userId);
+                    }
+                    catch (Exception e){
+                        throw e;
+                    }
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     return rowsAffected > 0;

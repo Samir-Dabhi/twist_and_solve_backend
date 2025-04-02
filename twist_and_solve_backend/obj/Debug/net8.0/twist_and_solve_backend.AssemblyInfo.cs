@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83ef7c37e5495c97c59d2e931b9b5c64824baa7b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5bdc9fc8d9da2bc626caa8fb8631dae64703da1")]
 [assembly: System.Reflection.AssemblyProductAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("twist_and_solve_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
